@@ -19,6 +19,7 @@ library(cowplot)
 library(ggspatial)
 library(osmdata)
 library(classInt)
+library(ggtext)
 
 ####################################### Représentation de polygones
 

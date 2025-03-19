@@ -25,6 +25,7 @@ map |>
   left_join(df) -> map
 
 
+
 ggplot() +
   geom_sf(data = map, aes(fill = rwic),colour = NA,size = 0.25) + 
   scale_fill_carto_c(type = "quantitative", palette = "SunsetDark",

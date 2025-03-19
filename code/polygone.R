@@ -33,11 +33,32 @@ carte_centroid <- st_centroid(Togo, of_largest_polygon = T)
 df2 <- carte_centroid |> 
   left_join(taux,by = join_by(shapeName == Prefecture))
 
+library(camcorder)
+
+gg_record(
+  dir = "data",
+  device = "png",
+  width = 70,
+  height = 70,
+  unit = "cm",
+  dpi = 500
+)
+
+
 ggplot() +
   geom_sf(data = df, fill = "white") +
   geom_sf(data = df2,aes(size = Indice_Contexte),color = "#9d1e1e") +
   scale_size(range = c(0, 8),name = "Conetxte" ) +
-  theme_void()
+  labs(title = "Représentation des Indices de **<span style ='color:#9d1e1e'>Contexte Moyen</span>** des préfectures <br> à partir des contextes des écoles", subtitle = "Données simulées à partir des données de contexte des écoles issues tableaux de bord écoles", caption = "Introduction à la représentation Cartographique avec R | R learner Community | Réalisation: Komlan Samati")+
+  theme_void() +
+  theme(text = element_text(size = 12, family = 'Ubuntu', color = "grey40"),
+        plot.title = element_markdown(family = 'Ubuntu', size = 25, hjust = 0),
+        plot.title.position = "plot",
+        plot.subtitle = element_markdown(family = 'Ubuntu', size = 16),
+        plot.caption = element_markdown(family = 'Ubuntu', size = 12, hjust = 1),
+        plot.caption.position = "plot",
+        legend.key.width = unit(2, "lines")
+  )
 
 ### 4.3 Représentation avec tmap
 
@@ -63,6 +84,7 @@ data <- bi_class(df,
 # Créer la carte
 map <- ggplot() +
   geom_sf(data = data, mapping = aes(fill = bi_class), color = "white", size = 0.1, show.legend = FALSE) +
+  labs(caption = "Introduction à la représentation Cartographique avec R | R learner Community | Réalisation: Komlan Samati")+
   bi_scale_fill(pal = "GrPink", dim = 3) +
   bi_theme()
 
@@ -71,7 +93,7 @@ legend <- bi_legend(pal = "GrPink",
                     dim = 3,
                     xlab = "Context",
                     ylab = "Resultat",
-                    size = 8)
+                    size = 12)
 # rassembler le tout
 
 # combine map with legend
